@@ -91,14 +91,10 @@ fun ReplyListAndDetailContent(
     modifier: Modifier = Modifier
 ) {
     val emails = replyUiState.currentMailboxEmails
-    /*val activity = LocalContext.current as Activity
-    ReplyDetailsScreen(
-        replyUiState = replyUiState,
-        modifier = Modifier.weight(1f),
-        onBackPressed = { activity.finish() }
-    )*/
+    val activity = LocalContext.current as Activity
+
     Row(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         LazyColumn(
@@ -114,22 +110,21 @@ fun ReplyListAndDetailContent(
                 ReplyEmailListItem(
                     email = email,
                     selected = replyUiState.currentSelectedEmail.id == email.id,
-                    onCardClick = {
-                        onEmailCardPressed(email)
-                    },
+                    onCardClick = { onEmailCardPressed(email) }
                 )
             }
         }
-        val activity = LocalContext.current as Activity
+
         ReplyDetailsScreen(
             replyUiState = replyUiState,
             modifier = Modifier
                 .padding(top = dimensionResource(R.dimen.email_list_item_vertical_spacing))
                 .weight(1f),
-            onBackPressed = {}
+            onBackPressed = { activity.finish() }
         )
     }
 }
+
 
 @Composable
 fun ReplyEmailListItem(
